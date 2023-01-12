@@ -43,7 +43,7 @@ VC Noticeを運用するためには以下の手順を踏む必要がありま�
 ![OpenPython](./img/OpenInstaller.png)
 3. Install Nowをクリック  
 ![Install1](./img/Install1.png)
-4. 待ちます
+4. 待ちます  
 ![Install2](./img/Install2.png)
 5. 終わりです。Closeをクリック  
 ![Install3](./img/Install3.png)
