@@ -10,6 +10,7 @@ intents = discord.Intents.all()
 client = discord.Client(intents = intents)
 
 PATH = './settings.json'
+HELP_PATH = "./help.txt"
 
 if debug:
     PATH = "./test_settings.json"
@@ -266,6 +267,14 @@ async def on_message(message):
         if content.startswith("yummy"):
             await message.channel.send('美味しいヤミー❗️✨🤟😁👍✨⚡️感謝❗️🙌✨感謝❗️🙌✨またいっぱい食べたいな❗️🥓🥩🍗🍖😋🍴✨デリシャッ‼️🙏✨ｼｬ‼️🙏✨ ｼｬ‼️🙏✨ ｼｬ‼️🙏✨ ｼｬ‼️🙏✨ ｼｬ‼️🙏✨ ｼｬｯｯ‼😁🙏✨ハッピー🌟スマイル❗️❗️💥✨👉😁👈⭐️')
             return
+        
+        if content.startswith("help"):
+            content = rmprefix(content, "help")
+            file = open(HELP_PATH, 'r')
+            data = file.read()
+            file.close()
+            data = data.replace("==", SERVER_SETTINGS[str(message.guild.id)]["PREFIX"])
+            await message.channel.send(data)
 
             
 @client.event
