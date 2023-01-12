@@ -138,12 +138,14 @@ async def on_message(message):
                 SERVER_SETTINGS[str(message.guild.id)]["VOICE"].append(id)
                 await message.channel.send(f"`{name}`を監視対象に追加しました")
                 print("監視対象に追加")
+                save()
                 return
             #引数がテキストチャンネルの場合
             if str(client.get_channel(id).type) == 'text':
                 SERVER_SETTINGS[str(message.guild.id)]["TEXT"] = id
                 await message.channel.send(f"`{name}`にVC通知を送信します")
                 print("送信先変更")
+                save()
                 return
             #VCでもテキストでもない場合
             await message.channel.send(f"`{name}`は定義外のチャンネル`{client.get_channel(id).type}`です\nこれは想定外のエラーです。管理者に報告してください。")
@@ -188,6 +190,7 @@ async def on_message(message):
                         SERVER_SETTINGS[str(message.guild.id)]["VOICE"].pop(j)
                         await message.channel.send(f"`{name}`を監視対象から削除")
                         print("監視対象から削除")
+                        save()
                         return
                 #SETTINGS["VOICE"]に入ってない時
                 await message.channel.send(f"`{name}`は監視対象ではありません")
@@ -215,7 +218,7 @@ async def on_message(message):
             if voicechannel == '':
                 voicechannel = "なし"
             embed.add_field(name="監視対象VC",value=voicechannel,inline=False)
-            embed.set_footer(text="hyouhyan.com")
+            embed.set_footer(text="ogla.hyouhyan.com")
 
             await message.channel.send(embed=embed)
             return
@@ -233,7 +236,7 @@ async def on_message(message):
             if voicechannel == '':
                 voicechannel = "なし"
             embed.add_field(name="監視対象VC",value=voicechannel,inline=False)
-            embed.set_footer(text="hyouhyan.com")
+            embed.set_footer(text="ogla.hyouhyan.com")
 
             await message.channel.send(embed=embed)
             return
@@ -249,6 +252,7 @@ async def on_message(message):
                 return
             SERVER_SETTINGS["PREFIX"] = content
             await message.channel.send(f'接頭語を{SERVER_SETTINGS[str(message.guild.id)]["PREFIX"]}に変更しました')
+            save()
             return
 
         if content.startswith('suteme'):
@@ -256,24 +260,7 @@ async def on_message(message):
             BOT_SETTINGS["PLAYING"] = content
             await client.change_presence(activity = discord.Activity(name=str(BOT_SETTINGS["PLAYING"]), type=discord.ActivityType.playing))
             await message.channel.send(f'ステータスを`{BOT_SETTINGS["PLAYING"]}`に変更しました')
-            return
-
-        if content.startswith("send"):
-            content = rmprefix(content, "send")
-            if content == '':
-                await message.channel.send(f'{SERVER_SETTINGS[str(message.guild.id)]["PREFIX"]} send `id` `送信する内容`')
-                return
-
-            content = content.split(' ')
-            id = int(content[0])
-            content.pop(0)
-
-            botRoom = client.get_channel(id)
-            for i in content:
-                new_content = i + ' '
-
-            await botRoom.send(new_content)
-            await message.channel.send(f'<#{id}>に`{new_content}`を送信しました')
+            save()
             return
 
         if content.startswith("yummy"):
@@ -283,7 +270,7 @@ async def on_message(message):
             
 @client.event
 async def on_voice_state_update(member, before, after):
- 
+
     # チャンネルへの入室ステータスが変更されたとき（ミュートON、OFFに反応しないように分岐）
     if before.channel != after.channel:
         print("アプデ!!")
