@@ -52,7 +52,7 @@ VC Noticeを運用するためには以下の手順を踏む必要がありま�
 MacもWindowsと同様でインストーラー開いてポチポチしてればできます。
 
 ## VC Noticeのダウンロードと実行
-1. [こちら](https://github.com/ogLa-Production/VC-Notice/releases/latest)からzipファイルをダウンロード
+1. [こちら](https://github.com/ogLa-Production/VC-Notice/releases/latest)からVC-Notice.zipファイルをダウンロード
 2. zipファイルを解凍し、settings.json内の`WriteYourBotToken`に自分のトークンを入れて保存  
 ![settings.json](img/スクリーンショット%202023-01-12%2020.48.35.png)
 3. ターミナルにて`python main.py`を実行するとbotを起動できます
