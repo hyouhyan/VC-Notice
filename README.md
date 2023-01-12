@@ -1,5 +1,6 @@
 # VC Notice
-VC Noticeは指定されたDiscordのVCを監視し、ユーザーの入退室を通知するbotです。
+VC Noticeは指定されたDiscordのVCを監視し、ユーザーの入退室を通知するbotです。  
+![Preview](./img/preview.png)
 
 
 # セットアップ
