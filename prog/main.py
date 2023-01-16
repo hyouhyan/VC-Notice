@@ -10,12 +10,13 @@ intents = discord.Intents.all()
 client = discord.Client(intents = intents)
 
 PATH = './settings.json'
+TOKEN_PATH="./TOKEN.txt"
 HELP_PATH = "./help.txt"
 
 if debug:
     PATH = "./test_settings.json"
 
-BOT_SETTINGS = {"PLAYING": "", "TOKEN": ""}
+BOT_SETTINGS = {"PLAYING": ""}
 SERVER_SETTINGS = {"": {"TEXT": 0, "VOICE": [0, 0], "PREFIX": "??"}}
 
 CHANNELS = {}
@@ -337,4 +338,8 @@ async def on_guild_remove(guild):
     update_guilds()
     update_channels()
 
-client.run(BOT_SETTINGS["TOKEN"])
+f = open(TOKEN_PATH, 'r')
+TOKEN = f.read()
+f.close()
+
+client.run(TOKEN)
