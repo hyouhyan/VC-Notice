@@ -53,9 +53,9 @@ MacもWindowsと同様でインストーラー開いてポチポチしてれば�
 
 ## VC Noticeのダウンロードと実行
 1. [こちら](https://github.com/ogLa-Production/VC-Notice/releases/latest)からVC-Notice.zipファイルをダウンロード
-2. zipファイルを解凍し、settings.json内の`WriteYourBotToken`に自分のトークンを入れて保存  
-![settings.json](img/スクリーンショット%202023-01-12%2020.48.35.png)
-3. ターミナルにて`python main.py`を実行するとbotを起動できます
+2. zipファイルを解凍し、TOKEN.txt内の`WriteYourBotToken`を削除し、自分のトークンを記入して保存  
+![settings.json](img/スクリーンショット%202023-01-17%2013.51.22.png)
+1. ターミナルにて`python main.py`を実行するとbotを起動できます
 
 Linuxの方は以下のようなserviceファイルを作成し、systemctlで管理することをお勧めします。
 ```
