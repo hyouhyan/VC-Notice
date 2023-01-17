@@ -3,7 +3,7 @@ import datetime
 import discord
 import os
 
-debug = False
+debug = True
 
 intents = discord.Intents.all()
 
@@ -15,6 +15,7 @@ HELP_PATH = "./help.txt"
 
 if debug:
     PATH = "./test_settings.json"
+    TOKEN_PATH="./test_TOKEN.txt"
 
 BOT_SETTINGS = {"PLAYING": ""}
 SERVER_SETTINGS = {"": {"TEXT": 0, "VOICE": [0, 0], "PREFIX": "??"}}
