@@ -3,26 +3,28 @@ import datetime
 import discord
 import os
 
-debug = False
+debug = True
 
 intents = discord.Intents.all()
 
 client = discord.Client(intents = intents)
 
 PATH = './settings.json'
+TOKEN_PATH="./TOKEN.txt"
 HELP_PATH = "./help.txt"
 
 if debug:
     PATH = "./test_settings.json"
+    TOKEN_PATH="./test_TOKEN.txt"
 
-BOT_SETTINGS = {"PLAYING": "", "TOKEN": ""}
+BOT_SETTINGS = {"PLAYING": ""}
 SERVER_SETTINGS = {"": {"TEXT": 0, "VOICE": [0, 0], "PREFIX": "??"}}
 
 CHANNELS = {}
 
 GUILDS = {}
 
-#jsonファイルへ[の書き出し
+#jsonファイルへの書き出し
 def save():
     file = open(PATH, 'w')
     temp = {"BOT":{}, "SERVER":{}}
@@ -41,8 +43,6 @@ def load():
         BOT_SETTINGS[i] = temp["BOT"][i]
     for i in temp["SERVER"]:
         SERVER_SETTINGS[i] = temp["SERVER"][i]
-
-load()
 
 #CHANNELS辞書のアップデート
 def update_channels():
@@ -83,6 +83,10 @@ def rmprefix(content, prefix):
 @client.event
 async def on_ready():
     print("ログイン成功")
+    
+    if os.path.exists(PATH):
+        load()
+    
     await client.change_presence(activity = discord.Activity(name=str(BOT_SETTINGS["PLAYING"]), type=discord.ActivityType.playing))
     update_channels()
     update_guilds()
@@ -337,4 +341,8 @@ async def on_guild_remove(guild):
     update_guilds()
     update_channels()
 
-client.run(BOT_SETTINGS["TOKEN"])
+f = open(TOKEN_PATH, 'r')
+TOKEN = f.read()
+f.close()
+
+client.run(TOKEN)
