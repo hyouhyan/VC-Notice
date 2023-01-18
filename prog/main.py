@@ -3,7 +3,7 @@ import datetime
 import discord
 import os
 
-debug = True
+debug = False
 
 intents = discord.Intents.all()
 
