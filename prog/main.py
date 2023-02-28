@@ -303,6 +303,12 @@ async def on_voice_state_update(member, before, after):
             embed = discord.Embed(title=f"{member.display_name}が「{after.channel.name}」に参加しました", color=discord.Colour.green())
             botRoom = client.get_channel(SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["TEXT"])
             send = True
+        # 移動通知
+        if after.channel is not None and before.channel is not None and after.channel.id in SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["VOICE"]:
+            print(f"移動 {member.name} {before.channel} → {after.channel}")
+            embed = discord.Embed(title=f"{member.display_name}が「{after.channel.name}」に移動しました", color=discord.Colour.orange())
+            botRoom = client.get_channel(SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["TEXT"])
+            send = True
         if send:
             embed.set_author(name=member.name,icon_url=member.avatar.url)
             embed.set_footer(text=datetime.datetime.now().strftime('%Y年%m月%d日 %H:%M:%S'))
