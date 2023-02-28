@@ -3,7 +3,11 @@ import datetime
 import discord
 import os
 
+TEST_TOKEN_PATH = "./test_settings.json"
+
 debug = False
+if os.path.exist(TEST_TOKEN_PATH):
+    debug = True
 
 intents = discord.Intents.all()
 
@@ -14,7 +18,7 @@ TOKEN_PATH="./TOKEN.txt"
 HELP_PATH = "./help.txt"
 
 if debug:
-    PATH = "./test_settings.json"
+    PATH = TEST_TOKEN_PATH
     TOKEN_PATH="./test_TOKEN.txt"
 
 BOT_SETTINGS = {"PLAYING": ""}
