@@ -7,7 +7,7 @@ import locale
 TEST_TOKEN_PATH = "./test_settings.json"
 
 debug = False
-if os.path.exist(TEST_TOKEN_PATH):
+if os.path.exists(TEST_TOKEN_PATH):
     debug = True
 
 intents = discord.Intents.all()
@@ -114,12 +114,13 @@ async def on_message(message):
             content = rmprefix(content, "set")
 
             if content == '':
-                await message.channel.send(f"チャンネルを指定してください\n例) {SERVER_SETTINGS[str(message.guild.id)]['PREFIX']} set `チャンネル名`")
+                # await message.channel.send(f"チャンネルを指定してください\n例) {SERVER_SETTINGS[str(message.guild.id)]['PREFIX']} set `チャンネル名`")
+                await message.channel.send(f"チャンネルIDを指定してください\n例) {SERVER_SETTINGS[str(message.guild.id)]['PREFIX']} set id `チャンネルID`")
                 return
             if content.startswith("id"):
                 content = rmprefix(content, "id")
                 if content == '':
-                    await message.channel.send(f"IDを指定してください\n例) {SERVER_SETTINGS[str(message.guild.id)]['PREFIX']} set id `チャンネルID`")
+                    await message.channel.send(f"チャンネルIDを指定してください\n例) {SERVER_SETTINGS[str(message.guild.id)]['PREFIX']} set id `チャンネルID`")
                     return
                 id = int(content)
                 if not id in CHANNELS:
@@ -128,17 +129,18 @@ async def on_message(message):
                     return
                 name = client.get_channel(id).name
             else:
-                id = 0
-                #チャンネル名をIDに変換
-                for i in CHANNELS:
-                    if content == CHANNELS[i]:
-                        id = i
-                        name = content
-                #id == 0 存在しない時
-                if id == 0:
-                    await message.channel.send(f"`{content}`は存在しません")
-                    print("存在しないチャンネル")
-                    return
+                # id = 0
+                # #チャンネル名をIDに変換
+                # for i in CHANNELS:
+                #     if content == CHANNELS[i]:
+                #         id = i
+                #         name = content
+                # #id == 0 存在しない時
+                # if id == 0:
+                #     await message.channel.send(f"`{content}`は存在しません")
+                #     print("存在しないチャンネル")
+                #     return
+                await message.channel.send(f"チャンネルIDを指定してください\n例) {SERVER_SETTINGS[str(message.guild.id)]['PREFIX']} set id `チャンネルID`")
             
             if str(client.get_channel(id).type) == 'voice':
                 if(id in SERVER_SETTINGS[str(message.guild.id)]["VOICE"]):
