@@ -2,6 +2,7 @@ import json
 import datetime
 import discord
 import os
+import locale
 
 TEST_TOKEN_PATH = "./test_settings.json"
 
@@ -315,7 +316,8 @@ async def on_voice_state_update(member, before, after):
             send = True
         if send:
             embed.set_author(name=member.name,icon_url=member.avatar.url)
-            embed.set_footer(text=datetime.datetime.now().strftime('%Y年%m月%d日 %H:%M:%S'))
+            locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
+            embed.set_footer(text=datetime.datetime.now().strftime('%Y年%m月%d日(%a) %H:%M:%S'))
             await botRoom.send(embed=embed)
  
 @client.event
