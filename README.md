@@ -34,7 +34,9 @@ VC Noticeを運用するためには以下の手順を踏む必要がありま�
 ### Linux(Ubuntu, Debian)の場合
 1. ターミナルを起動
 2. `$ sudo apt -y install python3.10` を実行
-3. `$ python3 -V`を実行してエラーが出なければ成功です
+3. `$ python3 -V`を実行してエラーが出ないことを確認
+4. `$ python3 -m pip install discord.py`を実行
+5. エラーが発生しなければ成功
 
 ### Windowsの場合
 
@@ -46,8 +48,12 @@ VC Noticeを運用するためには以下の手順を踏む必要がありま�
 ![Install1](./img/Install1.png)
 4. 待ちます  
 ![Install2](./img/Install2.png)
-5. 終わりです。Closeをクリック  
+5. Closeをクリック  
 ![Install3](./img/Install3.png)
+6. コマンドプロンプトを起動
+7. `python3 -V`を実行してエラーが出ないことを確認
+8. `$ python3 -m pip install discord.py`を実行
+9. エラーが発生しなければ成功
 
 MacもWindowsと同様でインストーラー開いてポチポチしてればできます。
 
