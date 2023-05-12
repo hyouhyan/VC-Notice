@@ -18,15 +18,15 @@ VC Noticeを運用するためには以下の手順を踏む必要がありま�
 
 1. [Discord Developer Portal](https://discord.com/developers/applications)にアクセス
 2. 右上の「New Application」をクリック  
-![NewApp](./img/スクリーンショット%202023-01-12%2018.43.43.png)
+![NewApp](./img/DiscordPortal1.png)
 3. 設定したいbotの名前を入力後、チェックを入れて「Create」  
-![SetName](./img/スクリーンショット%202023-01-12%2020.03.35.png)
+![SetName](./img/DiscordPortal2.png)
 4. Bot欄から「Add Bot」をクリック  
-![AddBot](./img/スクリーンショット%202023-01-12%2020.06.44.png)
+![AddBot](./img/DiscordPortal3.png)
 5. 「Yes, do it!」をクリック  
-![YesDoIt](./img/スクリーンショット%202023-01-12%2020.08.38.png)
+![YesDoIt](./img/DiscordPortal4.png)
 6. 画面上に表示されるトークンをメモしてください  
-![GetToken](./img/スクリーンショット%202023-01-12%2020.11.13.png)
+![GetToken](./img/DiscordPortal5.png)
 
 
 ## Pythonのダウンロードとインストール
@@ -54,7 +54,7 @@ MacもWindowsと同様でインストーラー開いてポチポチしてれば�
 ## VC Noticeのダウンロードと実行
 1. [こちら](https://github.com/ogLa-Production/VC-Notice/releases/latest)からVC-Notice.zipファイルをダウンロード
 2. zipファイルを解凍し、TOKEN.txt内の`WriteYourBotToken`を削除し、自分のトークンを記入して保存  
-![settings.json](img/スクリーンショット%202023-01-17%2013.51.22.png)
+![settings.json](img/WriteYourToken.png)
 1. ターミナルにて`python main.py`を実行するとbotを起動できます
 
 Linuxの方は以下のようなserviceファイルを作成し、systemctlで管理することをお勧めします。
