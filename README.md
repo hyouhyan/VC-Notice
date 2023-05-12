@@ -52,7 +52,7 @@ VC Noticeを運用するためには以下の手順を踏む必要がありま�
 ![Install3](./img/Install3.png)
 6. コマンドプロンプトを起動
 7. `python3 -V`を実行してエラーが出ないことを確認
-8. `$ python3 -m pip install discord.py`を実行
+8. `python3 -m pip install discord.py`を実行
 9. エラーが発生しなければ成功
 
 MacもWindowsと同様でインストーラー開いてポチポチしてればできます。
