@@ -297,23 +297,28 @@ async def on_voice_state_update(member, before, after):
         #print(before)
         #print(after)
         send = False
+        
+        userNameForDisplay = member.display_name
+        if(userNameForDisplay == member.name):
+            userNameForDisplay = member.global_name
+        
 
         # 退室通知
         if before.channel is not None and before.channel.id in SERVER_SETTINGS[str(client.get_channel(before.channel.id).guild.id)]["VOICE"]:
             print(f"退出 {member.name} {before.channel}")
-            embed = discord.Embed(title=f"{member.display_name}が「{before.channel.name}」から退出しました", color=discord.Colour.red())
+            embed = discord.Embed(title=f"{userNameForDisplay}が「{before.channel.name}」から退出しました", color=discord.Colour.red())
             botRoom = client.get_channel(SERVER_SETTINGS[str(client.get_channel(before.channel.id).guild.id)]["TEXT"])
             send = True
         # 入室通知
         if after.channel is not None and after.channel.id in SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["VOICE"]:
             print(f"参加 {member.name} {after.channel}")
-            embed = discord.Embed(title=f"{member.display_name}が「{after.channel.name}」に参加しました", color=discord.Colour.green())
+            embed = discord.Embed(title=f"{userNameForDisplay}が「{after.channel.name}」に参加しました", color=discord.Colour.green())
             botRoom = client.get_channel(SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["TEXT"])
             send = True
         # 移動通知
         if after.channel is not None and before.channel is not None and after.channel.id in SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["VOICE"]:
             print(f"移動 {member.name} {before.channel} → {after.channel}")
-            embed = discord.Embed(title=f"{member.display_name}が「{after.channel.name}」に移動しました", color=discord.Colour.orange())
+            embed = discord.Embed(title=f"{userNameForDisplay}が「{after.channel.name}」に移動しました", color=discord.Colour.orange())
             botRoom = client.get_channel(SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["TEXT"])
             send = True
         if send:
@@ -321,7 +326,7 @@ async def on_voice_state_update(member, before, after):
             locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
             embed.set_footer(text=datetime.datetime.now().strftime('%Y年%m月%d日(%a) %H:%M:%S'))
             await botRoom.send(embed=embed)
- 
+
 @client.event
 async def on_guild_channel_update(before, after):
     print("チャンネル名変わったよー")
