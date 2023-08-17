@@ -299,9 +299,12 @@ async def on_voice_state_update(member, before, after):
         send = False
         
         userNameForDisplay = member.display_name
-        if(userNameForDisplay == member.name):
+        if(userNameForDisplay == member.name and member.global_name != None):
             userNameForDisplay = member.global_name
-        
+
+        print(member.display_name)
+        print(member.name)
+        print(member.global_name)
 
         # 退室通知
         if before.channel is not None and before.channel.id in SERVER_SETTINGS[str(client.get_channel(before.channel.id).guild.id)]["VOICE"]:
@@ -322,7 +325,7 @@ async def on_voice_state_update(member, before, after):
             botRoom = client.get_channel(SERVER_SETTINGS[str(client.get_channel(after.channel.id).guild.id)]["TEXT"])
             send = True
         if send:
-            embed.set_author(name=member.name,icon_url=member.avatar.url)
+            embed.set_author(name=member.name,icon_url=member.display_avatar.url)
             locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
             embed.set_footer(text=datetime.datetime.now().strftime('%Y年%m月%d日(%a) %H:%M:%S'))
             await botRoom.send(embed=embed)
