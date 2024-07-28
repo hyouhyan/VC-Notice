@@ -4,6 +4,8 @@ import discord
 import os
 import locale
 
+from discord import app_commands
+
 TEST_TOKEN_PATH = "./test_settings.json"
 
 debug = False
@@ -13,6 +15,8 @@ if os.path.exists(TEST_TOKEN_PATH):
 intents = discord.Intents.all()
 
 client = discord.Client(intents = intents)
+
+commandTree = app_commands.CommandTree(client)
 
 PATH = './settings.json'
 TOKEN_PATH="./TOKEN.txt"
@@ -96,6 +100,9 @@ async def on_ready():
     update_channels()
     update_guilds()
     initialize()
+    for i in client.guilds:
+        commandTree.clear_commands(guild = discord.Object(id = i.id))
+    await commandTree.sync()
 
 @client.event
 async def on_message(message):
@@ -366,5 +373,39 @@ async def on_guild_remove(guild):
 f = open(TOKEN_PATH, 'r')
 TOKEN = f.read()
 f.close()
+
+@commandTree.command(name="addchannel", description="監視対象、または通知を送信するチャンネルを追加")
+async def control_command(interaction: discord.Interaction):
+    view = addChannelView()
+    await interaction.response.send_message(view=view, content="チャンネルを選択してください")
+
+class addChannelView(discord.ui.View):
+    @discord.ui.select(cls=discord.ui.ChannelSelect, channel_types=[discord.ChannelType.text,discord.ChannelType.voice], placeholder="チャンネルを選択してください", min_values=1)
+    async def selectMenu(self, interaction: discord.Interaction, select: discord.ui.ChannelSelect):
+        SERVER_SETTINGS[str(interaction.guild.id)]["VOICE"].append(select.values[0].id)
+        await interaction.response.send_message(f"`{select.values[0]}`を監視対象に追加しました")
+        print("監視対象に追加")
+        save()
+
+@commandTree.command(name="removechannel", description="監視対象からチャンネルを削除")
+async def control_command(interaction: discord.Interaction):
+    view = removeChannelView()
+    await interaction.response.send_message(view=view, content="チャンネルを選択してください")
+    
+class removeChannelView(discord.ui.View):
+    @discord.ui.select(cls=discord.ui.ChannelSelect, channel_types=[discord.ChannelType.voice], placeholder="チャンネルを選択してください", min_values=1)
+    async def selectMenu(self, interaction: discord.Interaction, select: discord.ui.ChannelSelect):
+        for j in range(len(SERVER_SETTINGS[str(interaction.guild.id)]["VOICE"])):
+            if id == SERVER_SETTINGS[str(interaction.guild.id)]["VOICE"][j]:
+                SERVER_SETTINGS[str(interaction.guild.id)]["VOICE"].pop(j)
+                await interaction.response.send_message(f"`{select.values[0]}`を監視対象から削除")
+                print("監視対象から削除")
+                save()
+                return
+        #SETTINGS["VOICE"]に入ってない時
+        await interaction.response.send_message(f"`{select.values[0]}`は監視対象ではありません")
+        print("監視対象ではない")
+        
+
 
 client.run(TOKEN)
