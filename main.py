@@ -374,17 +374,30 @@ f = open(TOKEN_PATH, 'r')
 TOKEN = f.read()
 f.close()
 
-@commandTree.command(name="addchannel", description="監視対象、または通知を送信するチャンネルを追加")
-async def control_command(interaction: discord.Interaction):
-    view = addChannelView()
+@commandTree.command(name="add_vc", description="監視対象VCを追加")
+async def add_vc_command(interaction: discord.Interaction):
+    view = addVCView()
     await interaction.response.send_message(view=view, content="チャンネルを選択してください")
 
-class addChannelView(discord.ui.View):
-    @discord.ui.select(cls=discord.ui.ChannelSelect, channel_types=[discord.ChannelType.text,discord.ChannelType.voice], placeholder="チャンネルを選択してください", min_values=1)
+class addVCView(discord.ui.View):
+    @discord.ui.select(cls=discord.ui.ChannelSelect, channel_types=[discord.ChannelType.voice], placeholder="チャンネルを選択してください", min_values=1)
     async def selectMenu(self, interaction: discord.Interaction, select: discord.ui.ChannelSelect):
         SERVER_SETTINGS[str(interaction.guild.id)]["VOICE"].append(select.values[0].id)
         await interaction.response.send_message(f"`{select.values[0]}`を監視対象に追加しました")
         print("監視対象に追加")
+        save()
+
+@commandTree.command(name="set_tc", description="通知を送信するテキストチャンネルを設定")
+async def set_tc_command(interaction: discord.Interaction):
+    view = setTCView()
+    await interaction.response.send_message(view=view, content="チャンネルを選択してください")
+
+class setTCView(discord.ui.View):
+    @discord.ui.select(cls=discord.ui.ChannelSelect, channel_types=[discord.ChannelType.text], placeholder="チャンネルを選択してください", min_values=1)
+    async def selectMenu(self, interaction: discord.Interaction, select: discord.ui.ChannelSelect):
+        SERVER_SETTINGS[str(interaction.guild.id)]["TEXT"] = select.values[0].id
+        await interaction.response.send_message(f"`{select.values[0]}`にVC通知を送信します")
+        print("送信先変更")
         save()
 
 @commandTree.command(name="removechannel", description="監視対象からチャンネルを削除")
