@@ -400,7 +400,7 @@ class setTCView(discord.ui.View):
         print("送信先変更")
         save()
 
-@commandTree.command(name="removechannel", description="監視対象からチャンネルを削除")
+@commandTree.command(name="rm_vc", description="監視対象からチャンネルを削除")
 async def control_command(interaction: discord.Interaction):
     view = removeChannelView()
     await interaction.response.send_message(view=view, content="チャンネルを選択してください")
