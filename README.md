@@ -87,3 +87,10 @@ ExecStop=/bin/kill -s INT $MAINPID
 [Install]
 WantedBy=multi-user.target
 ```
+
+
+## Dockerfile
+```
+docker build -t vc-notice .
+docker run -d --name vc-notice vc-notice
+```
