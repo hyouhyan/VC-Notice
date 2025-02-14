@@ -8,7 +8,8 @@ WORKDIR /app
 RUN apt-get update
 RUN apt-get -y install locales-all
 
-ENV LANG ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8\
+    TZ=Asia/Tokyo
 
 # 依存関係をコピー
 COPY requirements.txt requirements.txt
