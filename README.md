@@ -92,5 +92,5 @@ WantedBy=multi-user.target
 ## Dockerfile
 ```
 docker build -t vc-notice .
-docker run -d --name vc-notice vc-notice
+docker run -d --restart always --name vc-notice vc-notice
 ```
